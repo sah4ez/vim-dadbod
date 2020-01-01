@@ -5,22 +5,26 @@ let g:autoloaded_db_verticas = 1
 
 function! db#adapter#vertica#canonicalize(url) abort
   let url = substitute(a:url, '^[^:]*:/\=/\@!', 'vertica:///', '')
-  return db#url#absorb_params(url, {
-        \ 'user': 'user',
-        \ 'password': 'password',
-        \ 'host': 'host',
-        \ 'port': 'port',
-        \ 'dbname': 'database'})
+
+  return ""
+  " return db#url#absorb_params(url, {
+        " \ 'user': 'user',
+        " \ 'password': 'password',
+        " \ 'host': 'host',
+        " \ 'port': 'port',
+        " \ 'dbname': 'database'})
 endfunction
 
 function! db#adapter#vertica#interactive(url, ...) abort
-  let short = matchstr(a:url, '^[^:]*:\%(///\)\=\zs[^/?#]*$')
-  return 'vsql -w ' . (a:0 ? a:1 . ' ' : '') . shellescape(len(short) ? short : a:url)
+  " let short = matchstr(a:url, '^[^:]*:\%(///\)\=\zs[^/?#]*$')
+  " return 'vsql -w ' . (a:0 ? a:1 . ' ' : '') . shellescape(len(short) ? short : a:url)
+  return 'vsql -U dbadmin -h localhost -d docker -p 5433'
 endfunction
 
 function! db#adapter#vertica#filter(url) abort
-  return db#adapter#vertica#interactive(a:url,
-        \ '-P columns=' . &columns . ' -v ON_ERROR_STOP=1 -f -')
+  return 'vsql -U dbadmin -h localhost -d docker -p 5433'
+  " return db#adapter#vertica#interactive(a:url,
+        " \ '-P columns=' . &columns . ' -v ON_ERROR_STOP=1 -f -')
 endfunction
 
 function! s:parse_columns(output, ...) abort
@@ -33,8 +37,8 @@ function! s:parse_columns(output, ...) abort
 endfunction
 
 function! db#adapter#vertica#complete_database(url) abort
-  let cmd = 'vsql --no-vsqlrc -wltAX ' .
-        \ shellescape(substitute(a:url, '/[^/]*$', '/verticas', ''))
+  let cmd = 'vsql -U dbadmin -h localhost -d docker -p 5433 --no-vsqlrc -wltAX ' .
+        \ shellescape(substitute(a:url, '/[^/]*$', '/vertica', ''))
   return s:parse_columns(system(cmd), 0)
 endfunction
 
