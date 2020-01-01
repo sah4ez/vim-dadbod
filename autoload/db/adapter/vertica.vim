@@ -20,9 +20,8 @@ function! db#adapter#vertica#interactive(url, ...) abort
 endfunction
 
 function! db#adapter#vertica#filter(url) abort
-  return 'vsql -U dbadmin -h localhost -d docker -p 5433'
-  " return db#adapter#vertica#interactive(a:url,
-        " \ '-P columns=' . &columns . ' -v ON_ERROR_STOP=1 -f -')
+  return db#adapter#vertica#interactive(a:url,
+		\ '-P columns=' . &columns . ' -v ON_ERROR_STOP=1 -f -')
 endfunction
 
 function! s:parse_columns(output, ...) abort
