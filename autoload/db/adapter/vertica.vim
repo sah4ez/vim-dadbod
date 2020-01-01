@@ -5,14 +5,12 @@ let g:autoloaded_db_verticas = 1
 
 function! db#adapter#vertica#canonicalize(url) abort
   let url = substitute(a:url, '^[^:]*:/\=/\@!', 'vertica:///', '')
-
-  return ""
-  " return db#url#absorb_params(url, {
-        " \ 'user': 'user',
-        " \ 'password': 'password',
-        " \ 'host': 'host',
-        " \ 'port': 'port',
-        " \ 'dbname': 'database'})
+  return db#url#absorb_params(url, {
+		\ 'user': 'user',
+		\ 'password': 'password',
+		\ 'host': 'host',
+		\ 'port': 'port',
+		\ 'dbname': 'database'})
 endfunction
 
 function! db#adapter#vertica#interactive(url, ...) abort
