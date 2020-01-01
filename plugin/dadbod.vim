@@ -13,6 +13,7 @@ call extend(g:, {'db_adapters': {}}, 'keep')
 call extend(g:db_adapters, {
       \ 'sqlite3': 'sqlite',
       \ 'postgres': 'postgresql',
+      \ 'vertica': 'vertica',
       \ }, 'keep')
 
 call extend(g:, {'dbext_schemes': {}}, 'keep')
@@ -22,6 +23,7 @@ call extend(g:dbext_schemes, {
       \ 'MYSQL': 'mysql',
       \ 'ORA': 'oracle',
       \ 'PGSQL': 'postgresql',
+      \ 'SQL': 'vertica',
       \ 'SQLITE': 'sqlite',
       \ 'SQLSRV': 'sqlserver',
       \ }, 'keep')
